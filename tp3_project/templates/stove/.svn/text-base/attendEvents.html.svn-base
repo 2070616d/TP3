@@ -1,0 +1,39 @@
+{% extends "basic.html" %}
+{% block title %}Attend events -{% endblock %}
+{% block head_block %}
+<link rel="stylesheet" href="/static/css/userProfile.css">
+{% endblock %}
+{% block body_block %}
+<h2 id="event_feed">Events attendance</h2>
+{% if eventswithattendance %}
+<form method="post" action="." enctype="multipart/form-data">
+    <table>
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <tr>
+            <th>Category</th>
+            <th>Event Name</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Location</th>
+            <th>Info</th>
+            <th>Attend?</th>
+        </tr>
+        {% for event in eventswithattendance %}
+        <tr>
+            <td> {{event.event.category}}  </td>
+            <td> <a href="{% url 'whatsOn' %}#event-{{event.event.id}}">{{event.event.name}}</a>  </td>
+            <td> {{event.event.startDate }} </td>
+            <td> {{event.event.endDate }} </td>
+            <td> {{event.event.location }} </td>
+            <td> {{event.event.info }} </td>
+            <td> <input id="id_form-{{ forloop.counter0 }}-checked" name="form-{{ forloop.counter0 }}-checked" type="checkbox" {{event.checked}}> </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <input id="submit_preferences" type="submit" value="Submit">
+</form>
+{% else %} 
+There are no events for you to attend!
+{% endif %}
+{% endblock %}

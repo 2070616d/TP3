@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/extra/2015/tp3/b/repos/!svn/ver/275/trunk/tp3_project
+END
+manage.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/extra/2015/tp3/b/repos/!svn/ver/52/trunk/tp3_project/manage.py
+END
+tests.sh
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/extra/2015/tp3/b/repos/!svn/ver/269/trunk/tp3_project/tests.sh
+END
+populate_db.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/extra/2015/tp3/b/repos/!svn/ver/262/trunk/tp3_project/populate_db.py
+END
+migrator.sh
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/extra/2015/tp3/b/repos/!svn/ver/171/trunk/tp3_project/migrator.sh
+END
+resolve.sh
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/extra/2015/tp3/b/repos/!svn/ver/265/trunk/tp3_project/resolve.sh
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/extra/2015/tp3/b/repos/!svn/ver/107/trunk/tp3_project/build.xml
+END

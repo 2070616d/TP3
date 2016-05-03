@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/extra/2015/tp3/b/repos/!svn/ver/274/trunk/tp3_project/stove
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/extra/2015/tp3/b/repos/!svn/ver/269/trunk/tp3_project/stove/urls.py
+END
+apps.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/extra/2015/tp3/b/repos/!svn/ver/37/trunk/tp3_project/stove/apps.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/extra/2015/tp3/b/repos/!svn/ver/271/trunk/tp3_project/stove/tests.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/extra/2015/tp3/b/repos/!svn/ver/9/trunk/tp3_project/stove/__init__.py
+END
+admin.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/extra/2015/tp3/b/repos/!svn/ver/267/trunk/tp3_project/stove/admin.py
+END
+forms.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/extra/2015/tp3/b/repos/!svn/ver/269/trunk/tp3_project/stove/forms.py
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/extra/2015/tp3/b/repos/!svn/ver/274/trunk/tp3_project/stove/views.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/extra/2015/tp3/b/repos/!svn/ver/269/trunk/tp3_project/stove/models.py
+END

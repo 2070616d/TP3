@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="TP3" basedir="." default="tests">
+    <target name="resolve" description="Resolve dependencies">
+        <exec executable="./resolve.sh"/>
+    </target>
+
+    <target name="tests" depends="resolve" description="Run tests.py">
+        <exec executable="./tests.sh"/>
+    </target>
+</project>

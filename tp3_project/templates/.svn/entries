@@ -1,0 +1,61 @@
+8
+
+dir
+277
+http://hoved.dcs.gla.ac.uk/extra/2015/tp3/b/repos/trunk/tp3_project/templates
+http://hoved.dcs.gla.ac.uk/extra/2015/tp3/b/repos
+
+
+
+2016-03-25T20:10:51.164216Z
+275
+2070616d
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0a9c4a13-9810-4e72-aad1-303333cff6a3
+
+admin
+dir
+
+basic.html
+file
+
+
+
+
+2016-03-25T20:12:46.000000Z
+4e71b8bca5bbd0b364dbffa2e239e467
+2016-03-25T20:10:51.164216Z
+275
+2070616d
+
+index.html
+file
+
+
+
+
+2016-03-25T20:12:46.000000Z
+79f4f4ae6c2b23ce36425a7d53c04e2b
+2016-03-25T20:10:51.164216Z
+275
+2070616d
+
+registration
+dir
+
+stove
+dir
+

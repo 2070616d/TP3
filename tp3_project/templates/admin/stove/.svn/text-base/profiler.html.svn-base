@@ -1,0 +1,68 @@
+{% extends "admin/base_site.html" %}
+
+{% load staticfiles %}
+{% block coltype %}colSM{% endblock %}
+{% block content %}
+<h4>To get started, choose an event so we can process demographic data for its attendees:</h4>
+<form id="category_form" method="post" action=".">
+    {% csrf_token %}
+    <div class="selectwrapper">{{ form.events }}</div>
+    <input type="submit" name="submit" value="Get demographic data!" />
+</form>
+{% if err %}
+<span style="color:red;">{{ err }}</span>
+{% elif eventname %}
+<h2>The average attendee* of <u>{{eventname}}</u> is:</h2>
+{% if numattendees == 1 %}<p>* so far only <strong>one</strong> person has confirmed their attendance with MyStove</p>
+{% else %}<p>* out of <strong>{{numattendees}}</strong> people that have confirmed their attendance with MyStove</p>
+{% endif %}
+<div class="grid">
+    <div class="grid-1-4">
+        <span style="font-size:64px; line-height: 120%; color:
+        {% if age < 18 %}
+           #33bb33
+        {% elif age < 25 %}
+           #55bb22
+        {% elif age < 40 %}
+           #ffcc00
+        {% elif age < 60 %}
+           #0066ff
+        {% else %}
+           #9933ff
+        {% endif %}
+        ;">{{ age }}</span> years old
+    </div>
+    <div class="grid-1-4">
+        <p>{% if gender == 1 %}
+        <span style="font-size:64px; line-height: 120%; color: #3344ff;">&#x2642;</span> male
+        {% elif gender == 2 %}
+        <span style="font-size:64px; line-height: 120%; color: #ff3377;">&#x2640;</span> female
+        {% else %}
+        <span style="font-size:64px; line-height: 120%; color: #33bb33;">&#x26a7;</span> other gender or undisclosed
+        {% endif %}</p></div>
+    <div class="grid-1-4">
+        <p>In the <span style="font-size:48px; line-height: 200%;">{{postcode}}</span> postcode area</p>
+    </div>
+    <div class="grid-1-4">
+        {% if cats %}
+        <p>Interested in the following categories:</p>
+        <ul>
+        {% for i in cats %}<li>{{i}}</li>{% endfor %}
+        </ul>
+        {% else %}
+        <p style="line-height: 100px">Not interested in any categories</p>
+        {% endif %}
+    </div>
+</div>
+<div style="display: block; float: left;">
+<h2>People attending <u>{{eventname}}</u> are also attending:</h2>
+    {% if otherevents %}
+    <ul>
+    {% for i in otherevents %}<li>{{i}}</li>{% endfor %}
+    </ul>
+    {% else %}
+        So far they aren't attending any other events!
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

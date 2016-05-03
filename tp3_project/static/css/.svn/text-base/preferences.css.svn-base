@@ -1,0 +1,26 @@
+table#preferences{
+    border: none;
+    background: none;
+}
+
+#preferences tr {
+    background: none;
+}
+
+td.topic {
+    border: none !important;
+    background: none;
+    padding-left: 5%;
+}
+
+.checkbox-main-label {
+    font-size: 22px;
+    font-family: "OpenSansSemiBold";
+    padding-left: 10px;
+    letter-spacing: -0.5px;
+}
+
+#submit_preferences{
+    margin-left: 46%;
+}
+

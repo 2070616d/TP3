@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/extra/2015/tp3/b/repos/!svn/ver/275/trunk/tp3_project/templates/admin
+END
+base_site.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/extra/2015/tp3/b/repos/!svn/ver/173/trunk/tp3_project/templates/admin/base_site.html
+END
+change_form.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/extra/2015/tp3/b/repos/!svn/ver/78/trunk/tp3_project/templates/admin/change_form.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/extra/2015/tp3/b/repos/!svn/ver/195/trunk/tp3_project/templates/admin/index.html
+END

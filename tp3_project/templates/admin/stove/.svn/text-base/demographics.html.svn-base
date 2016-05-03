@@ -1,0 +1,214 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block coltype %}colSM{% endblock %}
+
+{% block content %}
+<link href="/static/css/c3.css" rel="stylesheet" type="text/css">
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"> </script>
+<script src="/static/js/c3.min.js"></script>
+
+<p>General user statistics below; or use <a href="{% url 'profiler' %}">the event profiler</a>.</p>
+<!-- ----------------------------------- Gender distribution chart ----------------------------------- -->
+<div id="gender" style="float: left; padding-right: 10px; width:400px; height: 400px;"> </div>
+<!-- ----------------------------------- Preference chart -------------------------------------------- -->
+<div id="preference" style="float: left; padding-right: 10px; width:400px; height: 400px;"> </div>
+<!-- ----------------------------------- Age chart --------------------------------------------------- -->
+<div id="age" style="float: left; padding-right: 10px; width:400px; height: 400px;"> </div>
+
+<!-- This script cannot be isolated to another file, as it is dynamically generated -->
+<script>
+    // DEFAULT column values displayed when nothing's on hover
+    defaultcolumnsgender = [
+             ['Other or undisclosed', {{not_disclosed}}],
+             ['Male', {{male}}],
+             ['Female', {{female}}]
+    ];
+    defaultcolumnspreference = [
+             {% for key,value in prefdict.items %}
+             ['{{key}}', {{value}}],
+             {% endfor %}
+    ];
+    defaultcolumnsage = [['Under 18', {{agedict.Under18}}],
+              ['18-24', {{agedict.1824}}],
+              ['25-39', {{agedict.2539}}],
+              ['40-59', {{agedict.4059}}],
+              ['Over 60', {{agedict.Over60}}]
+    ];
+    // MODIFIED column values displayed on hover
+    genderedcolumnsage = [ 
+             [['Under 18', {{agegendered.0.Under18}}],
+              ['18-24', {{agegendered.0.1824}}],
+              ['25-39', {{agegendered.0.2539}}],
+              ['40-59', {{agegendered.0.4059}}],
+              ['Over 60', {{agegendered.0.Over60}}]],
+             [['Under 18', {{agegendered.1.Under18}}],
+              ['18-24', {{agegendered.1.1824}}],
+              ['25-39', {{agegendered.1.2539}}],
+              ['40-59', {{agegendered.1.4059}}],
+              ['Over 60', {{agegendered.1.Over60}}]],
+             [['Under 18', {{agegendered.2.Under18}}],
+              ['18-24', {{agegendered.2.1824}}],
+              ['25-39', {{agegendered.2.2539}}],
+              ['40-59', {{agegendered.2.4059}}],
+              ['Over 60', {{agegendered.2.Over60}}]]
+    ];
+    genderedcolumnspreference = [ 
+             [{% for key,value in prefgendered.0.items %}
+              ['{{key}}', {{value}}],
+             {% endfor %}],
+             [{% for key,value in prefgendered.1.items %}
+              ['{{key}}', {{value}}],
+              {% endfor %}],
+             [{% for key,value in prefgendered.2.items %}
+              ['{{key}}', {{value}}],
+              {% endfor %}],
+    ];
+    prefdcolumnage={
+             {% for key,value in ageprefd.items %}
+             '{{key}}': [['Under 18', {{value.0}}],
+              ['18-24', {{value.1}}],
+              ['25-39', {{value.2}}],
+              ['40-59', {{value.3}}],
+              ['Over 60', {{value.4}}]],
+             {% endfor %}
+    };
+    prefdcolumngender={
+             {% for key,value in genderprefd.items %}
+             '{{key}}': [
+              ['Other or undisclosed', {{value.0}}],
+              ['Male', {{value.1}}],
+              ['Female', {{value.2}}]],
+             {% endfor %}
+    };
+    agedcolumnpreference=[
+             [{% for key,value in prefaged.0.items %}
+                 ['{{key}}', {{value}}],
+             {% endfor %}],
+             [{% for key,value in prefaged.1.items %}
+                 ['{{key}}', {{value}}],
+             {% endfor %}],
+             [{% for key,value in prefaged.2.items %}
+                 ['{{key}}', {{value}}],
+              {% endfor %}],
+             [{% for key,value in prefaged.3.items %}
+                 ['{{key}}', {{value}}],
+              {% endfor %}],
+             [{% for key,value in prefaged.4.items %}
+                 ['{{key}}', {{value}}],
+              {% endfor %}],
+    ];
+    agedcolumngender=[
+             [   ['Other or undisclosed', {{genderaged.0.0}}],
+                 ['Male', {{genderaged.0.1}}],
+                 ['Female', {{genderaged.0.2}}]],
+             [   ['Other or undisclosed', {{genderaged.1.0}}],
+                 ['Male', {{genderaged.1.1}}],
+                 ['Female', {{genderaged.1.2}}]],
+             [   ['Other or undisclosed', {{genderaged.2.0}}],
+                 ['Male', {{genderaged.2.1}}],
+                 ['Female', {{genderaged.2.2}}]],
+             [   ['Other or undisclosed', {{genderaged.3.0}}],
+                 ['Male', {{genderaged.3.1}}],
+                 ['Female', {{genderaged.3.2}}]],
+             [   ['Other or undisclosed', {{genderaged.4.0}}],
+                 ['Male', {{genderaged.4.1}}],
+                 ['Female', {{genderaged.4.2}}]],
+    ];
+
+var gender = c3.generate({
+    bindto: '#gender',
+    data: {
+        columns: defaultcolumnsgender,
+        colors: {
+            'Male': '#3344ff',
+            'Female': '#ff3377',
+            'Other or undisclosed': '#33bb33'
+        },
+        type : 'donut',
+        onmouseover: function (d, i) {
+            // Replace age chart
+            age.unload();
+            age.load({columns: genderedcolumnsage[d.index]});
+            // replace pref chart
+            preference.unload();
+            preference.load({columns: genderedcolumnspreference[d.index]});
+        },
+        onmouseout: function (d, i) {
+            // Replace age chart
+            age.unload();
+            age.load({columns: defaultcolumnsage});
+            // Replace pref chart
+            preference.unload();
+            preference.load({columns: defaultcolumnspreference});
+        }
+    },
+    donut: {
+        title: "Users by gender"
+    }
+});
+
+var preference = c3.generate({
+    bindto: '#preference',
+    data: {
+        columns: defaultcolumnspreference,
+        type : 'donut',
+
+        onmouseover: function (d, i) {
+            // Replace age chart
+            age.unload();
+            age.load({columns: prefdcolumnage[d.name]});
+            // replace gender chart
+            gender.unload();
+            gender.load({columns: prefdcolumngender[d.name]});
+        },
+        onmouseout: function (d, i) {
+            // Replace age chart
+            age.unload();
+            age.load({columns: defaultcolumnsage});
+            // Replace gender chart
+            gender.unload();
+            gender.load({columns: defaultcolumnsgender});
+        }
+    },
+    donut: {
+        title: "Users by categories of interest"
+    }
+}); 
+
+
+var age = c3.generate({
+    bindto: '#age',
+    data: {
+        columns: defaultcolumnsage,
+        colors: {
+            'Under 18': '#009900',
+            '18-24': '#88bb11',
+            '25-39': '#ffcc00',
+            '40-59': '#0066ff',
+            'Over 60': '#9933ff',
+        },
+        type : 'donut',
+        onmouseover: function (d, i) {
+            // Replace gender chart
+            gender.unload();
+            gender.load({columns: agedcolumngender[d.index]});
+            // Replace pref chart
+            preference.unload();
+            preference.load({columns: agedcolumnpreference[d.index]});
+        },
+        onmouseout: function (d, i) {
+            // Replace gender chart
+            gender.unload();
+            gender.load({columns: defaultcolumnsgender});
+            // Replace pref chart
+            preference.unload();
+            preference.load({columns: defaultcolumnspreference});
+        }
+    },
+    donut: {
+        title: "Users by age group"
+    }
+});
+</script>
+{% endblock %}

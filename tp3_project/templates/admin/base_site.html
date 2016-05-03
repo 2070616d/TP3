@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | MyStove Admin Panel{% endblock %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/stoveadmin.css" />
+{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"> MyStove Admin Panel</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+

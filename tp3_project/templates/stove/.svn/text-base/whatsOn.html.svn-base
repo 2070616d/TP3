@@ -1,0 +1,31 @@
+{% extends "basic.html" %}
+{% load cropping %}
+{% block head_block %}
+
+{% endblock %}
+
+{% block title %}What's on -{% endblock %}
+{% block body_block %}
+    <h1 id="whats_on">What's on?</h1>
+    {% if events %}
+        {% for event in events %}
+        <div id="event-{{event.id}}" style="min-height: 150px">
+            <div style="float:left; padding-right: 20px">{% if event.picture %}
+               <img src="{% cropped_thumbnail event "pictureCropping" %}" width = "222" height = "300"/>
+            {% else %}
+               <img src="{{ STATIC_URL }}defaultevent.jpg" width = "222" height = "300"/>
+            {% endif %}</div>
+            <h3>{{ event.name }}</h3>
+            <strong> {{ event.startDate }} - {{ event.endDate }} </strong> <br />
+            location: {{ event.location }} <br />
+            {% if event.info %}
+                For more information: {{ event.info }}
+            {% endif %}
+            <br />
+        </div>
+        <div style="margin-top: 20px; margin-bottom: 20px;" class="divider-border"></div>
+        {% endfor %}
+    {% else %}
+        There are currently no events
+    {% endif %}
+{% endblock %}

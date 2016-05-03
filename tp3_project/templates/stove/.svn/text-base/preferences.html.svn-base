@@ -1,0 +1,52 @@
+{% extends 'basic.html' %}
+
+{% block title %}My preferences -{% endblock %}
+{% load staticfiles %}
+
+{% block head_block %}
+<link rel="stylesheet" href="/static/css/preferences.css">
+{% endblock %}
+
+{% block body_block %}
+
+{% if user.is_authenticated %}
+<h1> Preferences </h1>
+<p>Choose any of the following categories/sub-categories that you like. By selecting preferences you are allowing MyStove to send you email notifications about new events that may interest you.</p>
+{% if preferences_list %}
+    <table id="preferences">
+    <form method="post" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for preference in preferences_list %}
+    {% if forloop.counter0|divisibleby:4 %}
+	{% if forloop.counter0 != 0 %}
+	</tr>
+	{% endif %}
+	<tr>
+    {% endif %}
+	<td class="topic">
+	<input type="checkbox" class="checkbox-main" name="topic" value={{ forloop.counter }} /><span class="checkbox-main-label">{{ preference.name }}</span>
+	{% if sub_preferences_list %}
+	    <ul class="inputs-list">
+	    {% for sub_preference in sub_preferences_list %}
+		{% if sub_preference.sp.preference == preference %}
+	        <li>
+		    <input type="checkbox" class="checkbox-sub-{{forloop.parentloop.counter}}" id="id_form-{{sub_preference.number}}-checked" name="form-{{sub_preference.number}}-checked" {{sub_preference.checked}}>{{ sub_preference.sp.name }}</input>
+		</li>
+		{% endif %}
+	    {% endfor %}
+	    </ul>
+	{% endif %}
+	</td>
+    {% endfor %}
+    </table>
+    <input id="submit_preferences" type="submit" value="Update">
+    </form>	
+{% else %}
+    <strong>There are no preferences for you to choose.</strong>
+{% endif %}
+{% else %}
+You aren't logged in!
+{% endif %}
+<script src="/static/js/preferences.js"></script>
+{% endblock %}

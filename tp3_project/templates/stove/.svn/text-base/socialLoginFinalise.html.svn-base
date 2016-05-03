@@ -1,0 +1,29 @@
+{% extends "basic.html" %}
+{% block title %}Just a wee bit left -{% endblock %}
+{% block body_block %}
+<h1>Just a wee bit left!</h1>
+<p>We need a few more details of yours to get started...</p>
+    <form id="user_form" method="post" action="{% url 'registrationviewSocial' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="postcode" placeholder="Postcode" id="id_postcode">
+        <input type="text" name="dateOfBirth" placeholder="Date of birth" id="id_dateOfBirth">
+        {% if not profile_form %} FIXME {% endif %}
+        <div class="selectwrapper">{{ profile_form.gender }}</div>
+        <input type="submit" name="register" style="float: right;" value="Register">
+    </form><br>
+    <span style="color: red">
+    {% if errors.firstName %}
+        {{ errors.firstName.as_text |slice:"1:" }}<br />
+    {% endif %}
+    {% if errors.lastName %}
+        {{ errors.lastName.as_text |slice:"1:" }}<br />
+    {% endif %}
+    {% if errors.postcode %}
+        {{ errors.postcode.as_text |slice:"1:" }}<br />
+    {% endif %}
+    {% if errors.dateOfBirth %}
+        {{ errors.dateOfBirth.as_text |slice:"1:" }}<br />
+    {% endif %}
+
+<script type='text/javascript' src='/static/js/editProfile.js'></script>
+{% endblock %}

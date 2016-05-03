@@ -1,0 +1,21 @@
+{% extends 'basic.html' %}
+{% block title %}Edit profile -{% endblock %}
+{% load staticfiles %}
+{% block body_block %}
+<div class="page-header">
+    <h1> Edit profile </h1>
+</div>
+
+<form id="user_profile_form" method="post" action="/editProfile/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="postcode" placeholder="Postcode" id="id_postcode" value="{{UserProfile.postcode}}">
+    <input type="text" name="dateOfBirth" placeholder="Date of birth" id="id_dateOfBirth" value="{{UserProfile.dateOfBirth|date:"d/m/Y"}}">
+    <div class="selectwrapper">
+        {{user_profile_form.gender}}
+    </div>
+    {{ user_profile_form.avatar }}
+    <input type="submit" name="login" style="float: right;" value="Save changes">
+</form>
+
+<script type='text/javascript' src='/static/js/editProfile.js'></script>
+{% endblock %}

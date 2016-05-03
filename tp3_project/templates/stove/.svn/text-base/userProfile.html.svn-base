@@ -1,0 +1,103 @@
+{% extends "basic.html" %}
+
+{% load cropping %}
+{% block title %}Profile page -{% endblock %}
+
+{% block head_block %}
+    <link rel="stylesheet" href="/static/css/userProfile.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+{% endblock %}
+
+{% block body_block %}
+<div class="wpb_row vc_row-fluid vc_row standard_section" style="padding-top: 20px"><div class="col span_12 dark left">
+    <div class="vc_col-sm-3 wpb_column column_container col no-extra-padding"><div class="wpb_wrapper"><div class="wpb_text_column wpb_content_element ">
+
+        {% if UserProfile.avatar %}
+            <img src="{% cropped_thumbnail UserProfile "avatarCropping" %}" class='avatar'/>
+        {% else %}
+            <img src="{{ STATIC_URL }}blankavatar.jpg" class='avatar'/>
+        {% endif %}
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <p class='details'>
+            {% if UserProfile.gender == 1 %}
+                <span style="font-size:32px; line-height: 120%; color: #3344ff;">&#x2642;</span> male
+            {% elif UserProfile.gender == 2 %}
+                <span style="font-size:32px; line-height: 120%; color: #ff3377;">&#x2640;</span> female
+            {% else %}
+                <span style="font-size:32px; line-height: 120%; color: #33bb33;">&#x26a7;</span> other gender or undisclosed
+            {% endif %} </p>
+        <p class='details'>Postcode: <strong>{{ UserProfile.postcode }}</strong></p>
+        <p class='details'>Born on <strong>{{ UserProfile.dateOfBirth }}</strong></p>
+
+        <div style="margin-top: 20px; margin-bottom: 20px;" class="divider-border"></div>
+
+        <ul class="nav nav-list tree" style="margin-left: 0px">
+            <li><a href="{% url 'editProfile' %}">Edit profile</a></li>
+          {% if not sociallogin %}
+            <li><a href="{% url 'password_change' %}">Change your password</a></li>
+          {% endif %}
+        </ul>
+
+    </div></div></div>
+
+    <div class="vc_col-sm-9 wpb_column column_container col no-extra-padding"><div class="wpb_wrapper"><div class="wpb_text_column wpb_content_element ">
+
+        <div style = "position: relative">
+            <h2 style = "display: inline;">My preferences</h2><a href="{% url 'preferences' %}" style="position: absolute; right: 0; bottom: 0;">Edit preferences</a></div>
+            <table id="preferences">
+                {% for preference in preferences_list %}
+                    {% if forloop.counter0|divisibleby:4 %}
+                        {% if forloop.counter0 != 0 %}
+                            </tr>
+                        {% endif %}
+                        <tr>
+                    {% endif %}
+                    <td class="topic">
+                        <h5>{{ preference.name }}</h5>
+                        {% if sub_preferences_list %}
+                            <ul class="inputs-list">
+                            {% for sub_preference in sub_preferences_list %}
+                                {% if sub_preference.sp.preference == preference %}
+                                    <li>
+                                        {%if sub_preference.checked%}
+                                            <span style="color: #33bb33; font-size: 24px;">&#x2713;</span>
+                                        {% else %}
+                                            <span style="color: #dd3322; font-size: 24px;">&#x2715;</span>
+                                        {% endif %}
+                                        {{ sub_preference.sp.name }}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div style = "position: relative">
+            <h2 style = "display: inline;">My Events</h2><a href="{% url 'attendEvents' %}" style="position: absolute; right: 0; bottom: 0;">Attend events</a></div>
+            {% if user_event %}
+               <table id="My_Events">
+                   <tr class="td1" id="td1" style="">
+                       <th>Event Name</th>
+                       <th>Start</th>
+                       <th>End</th>
+                   </tr>
+                   {% for attendance in user_event %}
+                   <tr class="td1" id="td1" style="">
+                   <td> {{attendance.event.name}}  </td>
+                   <td> {{attendance.event.startDate }} </td>
+                   <td> {{attendance.event.endDate }} </td>
+                   </tr>
+                   {% endfor %}
+               </table>
+            {% else %}
+                <p>You aren't <a href='{% url 'attendEvents' %}'>attending</a> any events.<p>
+            {% endif %}
+        </div>
+
+    </div></div></div>
+
+</div></div>
+{% endblock %}
